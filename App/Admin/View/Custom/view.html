@@ -1,0 +1,123 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Custom/index')">
+					<li>
+						<a href="{:U('admin/Custom/index')}" class="btn btn-outline btn-link">客户列表</a>
+					</li>
+					</if>
+					<li>
+						<strong>客户信息</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+			<div <empty name="has_package_list">class="col-sm-12"<else />class="col-sm-6"</empty>>
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>基本资料</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item ">
+								<eq name="info.status" value="1"><span class="badge badge-info">正常</span><else /><span class="badge badge-danger">禁用</span></eq>
+                                客户编号：{$info.custom_no}
+                            </li>
+                            <li class="list-group-item">
+								客户名称：{$info.name}
+                            </li>
+                            <li class="list-group-item">
+                                所属公司：{$info.company_name}
+                            </li>
+                            <li class="list-group-item">
+                                IMSI：{$info.imsi}
+                            </li>
+                            <li class="list-group-item">
+                                运营商：<if condition="$info.carrieroperator eq 10">联通<elseif condition="$info.carrieroperator eq 11"/>移动<else />电信</if>
+                            </li>
+                            <li class="list-group-item">
+                                SIM卡号：{$info.card_number}
+                            </li>
+                            <li class="list-group-item">
+                                运营商编号：{$info.card_from}
+                            </li>
+                            <li class="list-group-item">
+                                SIM卡状态：<if condition="$info.custom_state eq 10">测试期<elseif condition="$info.custom_state eq 11" />沉默期<elseif condition="$info.custom_state eq 12" />服务期<else />已注销</if>
+                            </li>
+							<notempty name="info.test_days">
+                            <li class="list-group-item">
+                                测试期：{$info.test_days} 天
+                            </li>
+							</notempty>
+							<notempty name="info.slience_days">
+                            <li class="list-group-item">
+                                沉默期：{$info.slience_days} 天
+                            </li>
+							</notempty>
+                            <li class="list-group-item">
+                                ICCID：{$info.iccid}
+                            </li>
+                            <li class="list-group-item ">
+                                车牌号：{$info.plate_number}
+                            </li>
+                            <li class="list-group-item">
+                                特殊标签：{$info.tag}
+                            </li>
+                            <li class="list-group-item">
+                                备注：{$info.remark}
+                            </li>
+                            <li class="list-group-item ">
+                                创建时间：{$info.create_time|date='Y-m-d H:i',###}
+                            </li>
+                            <li class="list-group-item">
+                                更新时间：{$info.update_time|date='Y-m-d H:i',###}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<notempty name="has_package_list">
+			<div class="col-sm-6">
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>拥有套餐</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+							<volist name="has_package_list" id="package" key="key">
+                            <li class="list-group-item ">
+								<span class="col-sm-9 pull-left">{$key}、{$package.name} [<if condition="$package.carrieroperator eq 10">联通<elseif condition="$package.carrieroperator eq 11"/>移动<else />电信</if>] <span class="badge badge-warning">售：{$package.open_price}元</span> <span class="badge badge-danger">续：{$package.expense_price}元</span></span>
+								<span> {$package.service_start_time|date='Y-m',###} - {$package.service_end_time|date='Y-m',###}</span>
+                            </li>
+							</volist>
+                        </ul>
+                    </div>
+                </div>
+				</notempty>
+            </div>
+			<div class="hr-line-dashed"></div>
+			<div class="col-sm-4 col-sm-offset-6">
+				<button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">返回</button>
+			</div>
+		</div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

@@ -1,0 +1,106 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<!-- <script src="__JS__/plugins/datapicker/bootstrap-datepicker.js"></script> -->
+<script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Expenses/batch')">
+					<li>
+						<a href="{:U('admin/Expenses/batch')}" class="btn btn-outline btn-link">批量续费管理</a>
+					</li>
+					</if>
+					<li>
+						<strong>批量续费</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+			<div class="col-sm-12">
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>批量续费模板</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>C</th>
+                                    <th>D</th>
+                                    <th>E</th>
+                                    <!-- <th>F</th>
+                                    <th>G</th>
+                                    <th>H</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>订单编号</td>
+                                    <td>IMSI</td>
+                                    <td>套餐ID</td>
+                                    <td>变更方式</td>
+                                    <td>单价</td>
+                                    <!-- <td>续费时间</td> -->
+                                    <!-- <td>用户名</td>
+                                    <td>车牌号</td> -->
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>20160823100300400</td>
+                                    <td>460040347700003</td>
+                                    <td>YD_30M_12MONTH</td>
+                                    <td>续费</td>
+                                    <td>10</td>
+                                    <!-- <td>13459444044</td>
+                                    <td>闽ABC123</td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+						<form method="post" action="{:U('admin/expenses/batchImport',array('Tag'=>$_GET['Tag']))}" enctype="multipart/form-data">
+						<div class="form-group">
+						</div>
+						<div class="form-group">
+							<div class="col-sm-8 text-center">
+								<input type="file" name="packageExpense" accept=".xls,.xlsx" class="btn btn-w-m btn-info pull-left"/>
+                                <if condition="$_GET['Time'] eq '1'">
+                                <div class="input-group input-daterange col-sm-5" style="border-right: 0;">
+                                    <span class="input-group-addon">操作时间</span>
+                                    <input type="text" name="optime" value="" class="form-control laydate-icon pull-left" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                    
+                                </div>
+                                </if>
+							</div>
+                            
+							<div class="col-sm-3 text-center">
+								<button type="submit" class="btn btn-primary">保存内容</button>
+								<button onclick="javascript:history.go(-1);" type="button" class="btn btn-outline btn-default">返回</button>
+							</div>
+						</div>
+						</form>
+                    </div>
+                </div>
+            </div>
+		</div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

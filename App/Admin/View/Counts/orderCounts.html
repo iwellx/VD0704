@@ -1,0 +1,161 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/footable/footable.core.css" rel="stylesheet">
+<link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<link href="__CSS__/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<style>
+#condition-search label{float:left;padding-left:5px;}
+.red{color:red;}
+.table-condensed th{text-align:left;}
+</style>
+<script src="__JS__/plugins/footable/footable.all.min.js"></script>
+<script src="__JS__/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="__JS__/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="__JS__/plugins/suggest/bootstrap-suggest.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-4 m-t">
+				<ol class="breadcrumb">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<li>
+						<a href="{:U('admin/Counts/orderCounts')}" class="btn btn-outline btn-link">统计管理</a>
+					</li>
+					<li>
+						<strong>全部订单统计</strong>
+					</li>
+				</ol>
+			</div>
+			<div class="arrow list-group-item-heading">
+				<a class="btn btn-outline btn-default do-refresh" href="javascript:;"><i class="fa fa-refresh"></i> 刷新</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 fontawesome-icon-list">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>订单统计</h5>
+						<div class="ibox-tools" style="display: none;"><a class="btn btn-primary btn-xs do-search" href="javascript:;"><i class="fa fa-search"></i> 搜索</a></div>
+					</div>
+					<div class="ibox-content">
+						<div id="condition-search" style="display: block;" class="col-sm-12">
+							<form method="get">
+								<label class="input-group col-sm-4">
+									<span class="input-group-addon">服务类型</span>
+									<select name="type" class="form-control m-b">
+										<option value="">请选择</option>
+                                        <option value="13" <eq name="Think.get.type" value="13">selected="selected"</eq>>套餐销售</option>
+                                        <option value="10" <eq name="Think.get.type" value="10">selected="selected"</eq>>开通套餐</option>
+                                        <option value="11" <eq name="Think.get.type" value="11">selected="selected"</eq>>续费套餐</option>
+                                        <option value="12" <eq name="Think.get.type" value="12">selected="selected"</eq>>更换套餐</option>
+                                    </select>
+								</label>
+								<label class="input-group col-sm-4">
+									<span class="input-group-addon">支付方式</span>
+									<select name="pay_type" class="form-control m-b">
+										<option value="">请选择</option>
+                                        <option value="10" <eq name="Think.get.pay_type" value="10">selected="selected"</eq>>微信支付</option>
+										<option value="11" <eq name="Think.get.pay_type" value="11">selected="selected"</eq>>支付宝</option>
+										<option value="12" <eq name="Think.get.pay_type" value="12">selected="selected"</eq>>银行转账</option>
+                                    </select>
+								</label>
+								<label class="input-group input-daterange col-sm-4">
+									<span class="input-group-addon">订单时间</span>
+									<input type="text" name="start" value="<notempty name="Think.get.start">{$Think.get.start}</notempty>" class="form-control">
+									<span class="input-group-addon">到</span>
+									<input type="text" name="end" value="<notempty name="Think.get.end">{$Think.get.end}</notempty>" class="form-control">
+								</label>
+								<label class="input-group col-sm-4">
+									<input type="text" class="form-control" id="package" name="company_name" placeholder='请输入公司名,全部敲空格' value="{$Think.get.company_name}">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu">
+										</ul>
+									</span>
+								</label>
+								<label class="input-group col-sm-4">
+									<input type="hidden" name="m" value="admin" />
+									<input type="hidden" name="c" value="counts" />
+									<input type="hidden" name="a" value="orderCounts" />
+								</label>
+								<label class="col-sm-4 text-right pull-right"><button type="submit" class="btn btn-outline btn-primary">立即搜索</button> <a href="{:U('admin/counts/orderCounts',array('search'=>1,'p'=>$_GET['p']))}" class="btn btn-outline btn-default">重置搜索</a> <a href="{:U('admin/counts/orderCounts',array('p'=>$_GET['p']))}" class="btn btn-outline btn-warning" style="display: none;">关闭搜索</a> <a href="{:U('admin/counts/orderCountsExport')}&{$page_search}" class="btn btn-outline btn-warning">导出</a></label>
+							</form>
+						</div>
+						<empty name="list">
+						<p class="red" style="padding-top:150px;text-align:center;font-size:15px;">
+							真遗憾，找不到数据！！！！
+						</p>
+						<else />
+						<table class="footable table table-stripped" data-filter=#filter>
+							<thead>
+								<tr>
+									<th>企业名</th>
+									<th>服务类型</th>
+									<th>订单总数</th>
+									<th>订单总金额</th>
+									<th>支付方式</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<volist name="list" id="info">
+								<tr>
+									<td>{$info.company_name}</td>
+									<td><if condition="$info.type eq 11">续费<elseif condition="$info.type eq 10" />开通<elseif condition="$info.type eq 12" />更换<elseif condition="$info.type eq 13" />销售</if></td>
+									<td>{$info.total_orders}</td>
+									<td>{$info.total_price}</td>
+									<td><if condition="$info.pay_type eq 10">微信支付<elseif condition="$info.pay_type eq 11" />支付宝<else />银行转账</if></td>
+									<td><a href="{:U('Admin/Counts/orderCostList',array('company'=>$info['company'],'start'=>$_GET['start'],'end'=>$_GET['end'],'pay_type'=>$info['pay_type'],'type'=>$info['type']))}">查看明细</a></td>
+								</tr>
+								</volist>
+							</tbody>
+						</table>
+						</empty>
+					</div>
+				</div>
+			</div>
+        </div>
+    <script>
+        $(document).ready(function(){
+			window.parent.remove_load();
+			$(".input-daterange").datepicker({keyboardNavigation:!1,forceParse:!1,autoclose:!0});
+			var taobaoBsSuggest = $("#package").bsSuggest({  
+				indexId: 2,             //data.value 的第几个数据，作为input输入框的内容  
+				indexKey: 1,            //data.value 的第几个数据，作为input输入框的内容  
+				allowNoKeyword: false,  //是否允许无关键字时请求数据。为 false 则无输入时不执行过滤请求  
+				multiWord: true,        //以分隔符号分割的多关键字支持  
+				separator: ",",         //多关键字支持时的分隔符，默认为空格  
+				getDataMethod: "url",   //获取数据的方式，总是从 URL 获取  
+				showHeader: true,       //显示多个字段的表头  
+				effectiveFieldsAlias:{Id: "序号",Keyword: "名称"},  
+				url: "{:U('admin/counts/getCompanyList')}&p=", /*优先从url ajax 请求 json 帮助数据，注意最后一个参数为关键字请求参数*/  
+				processData: function(json){     // url 获取数据时，对数据的处理，作为 getData 的回调函数  
+					var i, len, data = {value: []};  
+					if(!json || !json.result || json.result.length == 0) {  
+						return false;  
+					}  
+		  
+					console.log(json);  
+					len = json.result.length;  
+		  
+					for (i = 0; i < len; i++) {  
+						data.value.push({  
+							"Id": i+1,  
+							"Keyword": json.result[i][0]
+						});  
+					}  
+					console.log(data);  
+					return data;  
+				}  
+			}); 
+		})
+		
+    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_foo_table.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:03 GMT -->
+</html>

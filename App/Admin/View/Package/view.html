@@ -1,0 +1,91 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Package/index')">
+					<li>
+						<a href="{:U('admin/Package/index')}" class="btn btn-outline btn-link">套餐列表</a>
+					</li>
+					</if>
+					<li>
+						<strong>套餐信息</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+			<div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+								套餐编号：{$info.package_sn}
+                            </li>
+                            <li class="list-group-item ">
+								<eq name="info.status" value="1"><span class="badge badge-info">正常</span><else /><span class="badge badge-danger">禁用</span></eq>
+                                套餐名称：{$info.name}
+                            </li>
+                            <li class="list-group-item">
+								套餐价格：¥{$info.price}
+                            </li>
+                            <li class="list-group-item">
+								套餐参考价：¥{$info.package_rp}
+                            </li>
+                            <li class="list-group-item">
+								套餐价格：¥{$info.expense_price}
+                            </li>
+                            <li class="list-group-item">
+								续费参考价：¥{$info.expense_rp}
+                            </li>
+                            <li class="list-group-item">
+								套餐流量：{$info.package_value} M
+                            </li>
+                            <li class="list-group-item">
+                                运营商：<if condition="$info.carrieroperator eq 10">联通<elseif condition="$info.carrieroperator eq 11"/>移动<else />电信</if>
+                            </li>
+                            <li class="list-group-item">
+                                运营商编号：{$info.card_from}
+                            </li>
+                            <li class="list-group-item">
+                                套餐周期：{$info.cycle_value}<if condition="$info.cycle_unit eq year">年<elseif condition="$info.cycle_unit eq month"/>月<else />日</if>
+                            </li>
+                            <li class="list-group-item">
+                                <eq name="info.tag" value="10">流量<else />短信</eq>周期：{$info.value}<if condition="$info.unit eq year">年<elseif condition="$info.unit eq month"/>月<else />日</if>
+                            </li>
+                            <li class="list-group-item">
+                                套餐描述：{$info.description}
+                            </li>
+                            <li class="list-group-item ">
+                                创建时间：{$info.create_time|date='Y-m-d H:i',###}
+                            </li>
+                            <li class="list-group-item">
+                                更新时间：{$info.update_time|date='Y-m-d H:i',###}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="hr-line-dashed"></div>
+			<div class="col-sm-4 col-sm-offset-6">
+				<button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">返回</button>
+			</div>
+		</div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

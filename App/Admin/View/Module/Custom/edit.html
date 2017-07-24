@@ -1,0 +1,196 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/metro-gms/easyui.css">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/color.css">
+<style>
+textarea{resize:vertical}
+.input-daterange{padding-left:15px;}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Custom/index')">
+					<li>
+						<a href="{:U('admin/Custom/index')}" class="btn btn-outline btn-link">客户列表</a>
+					</li>
+					</if>
+					<li>
+						<strong>修改客户资料</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('admin/Custom/edit')}">
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">客户编号：</label>
+                                <div class="col-sm-10">
+                                    {$info.custom_no}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">客户名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" value="{$info.name}" class="form-control" placeholder="手机号" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">所属公司 <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <select name="company" class="form-control m-b">
+										<option value="">请选择客户所在公司</option>
+										<volist name="company_list" id="company">
+                                        <option value="{$company.id}" <if condition="$info.company eq $company['id']">selected="selected"</if>>{$company.name}</option>
+										</volist>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">IMSI <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="imsi" value="{$info.imsi}" class="form-control length_check" length='15' placeholder="">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">运营商：</label>
+                                <div class="col-sm-10">
+                                    <select name="carrieroperator" class="form-control m-b">
+                                        <option value="10" <if condition="$info.carrieroperator eq 10">selected="selected"</if>>联通</option>
+                                        <option value="11" <if condition="$info.carrieroperator eq 11">selected="selected"</if>>移动</option>
+                                        <option value="12" <if condition="$info.carrieroperator eq 12">selected="selected"</if>>电信</option>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">SIM卡号 <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_number" value="{$info.card_number}" class="form-control length_check" length='13' placeholder="">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">运营商编号 <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_from" value="{$info.card_from}" class="form-control" value="" placeholder="">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">SIM卡状态：</label>
+                                <div class="col-sm-10">
+                                    <select name="custom_state" class="form-control m-b">
+                                        <option value="10" <if condition="$info.custom_state eq 10">selected="selected"</if>>测试期</option>
+                                        <option value="11" <if condition="$info.custom_state eq 11">selected="selected"</if>>沉默期</option>
+                                        <option value="12" <if condition="$info.custom_state eq 12">selected="selected"</if>>服务期</option>
+                                        <option value="13" <if condition="$info.custom_state eq 13">selected="selected"</if>>已注销</option>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">测试期长：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" name="test_days" value="{$info.test_days}" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white" tabindex="-1">天</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">沉默期长：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" name="slience_days" value="{$info.slience_days}" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white" tabindex="-1">天</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">ICCID <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="iccid" value="{$info.iccid}" class="form-control length_check" length='20' placeholder="">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">车牌号：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="plate_number" value="{$info.plate_number}" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">特殊标签：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="tag" value="{$info.tag}" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-10">
+									<textarea name="remark" class="form-control">{$info.remark}</textarea>
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-10">
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="1" <eq name="info.status eq 1">checked="checked"</eq>> 启用</label>
+                                    </div>
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="0" <neq name="info.status eq 1">checked="checked"</neq>> 禁用</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+									<input type="hidden" name="id" value="{$info.id}" />
+                                    <button class="btn btn-primary" type="submit">提交修改</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+	$(function(){
+		$('.length_check').blur(function(){
+			var v = $.trim($(this).val());
+			var l = $(this).attr('length');
+			if(v.length>l)
+			{
+				s = v.substring(0,l);
+				r = s.length;
+			}else{
+				r = v.length;
+			}
+			$(this).val(s);
+			$(this).next().text('你当前已输入'+r);
+		})
+	})
+	</script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

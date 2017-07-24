@@ -1,0 +1,116 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/metro-gms/easyui.css">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/color.css">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/User/index')">
+					<li>
+						<a href="{:U('admin/User/index')}" class="btn btn-outline btn-link">用户</a>
+					</li>
+					</if>
+					<li>
+						<strong>修改用户资料</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('admin/User/edit')}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">用户名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="username" value="{$info.username}" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">昵称/姓名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="nickname" value="{$info.nickname}" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">密码：</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="password" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">所属用户组：</label>
+                                <div class="col-sm-10">
+									<select name="group_ids[]" class="easyui-combotree" style="height:34px;width: 100%;padding: 7px 12px;" data-options="value:'{$info["group_ids"]}',url:'{:U("Admin/Function/get_auth_group")}&r_type=json',valueField:'id',textField:'text',multiple:true,cascadeCheck:false,required:false,editable:false"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">邮箱：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="email" value="{$info.email}" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">手机：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="phone" value="{$info.phone}" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">信息：</label>
+								<div class="col-sm-10">
+									<textarea name="info" class="form-control">{$info.info}</textarea>
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-10">
+									<textarea name="remark" class="form-control">{$info.remark}</textarea>
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-10">
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="1" <eq name="info.status" value="1">checked="checked"</eq>> 启用</label>
+                                    </div>
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="0" <neq name="info.status" value="1">checked="checked"</neq>> 禁用</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+									<input type="hidden" name="id" value="{$info.id}" />
+                                    <button class="btn btn-primary" type="submit">提交修改</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>
+

@@ -1,0 +1,30 @@
+<extend name="Public:public" />
+
+<block name="title">注册</block>
+
+<block name="body">
+  <h2>注册</h2>
+  <hr>
+  <form method="post" class="am-form">
+    <label for="nickname">昵称:</label>
+    <input type="text" name="nickname" id="nickname" value="">
+    <br>
+    <label for="username">用户名:</label>
+    <input type="text" name="username" id="username" value="">
+    <br>
+    <label for="password">密码:</label>
+    <input type="password" name="password" id="password" value="">
+    <br>
+    <label for="email">邮箱:</label>
+    <input type="text" name="email" id="email" value="">
+    <br>
+    <label for="phone">手机:</label>
+    <input type="text" name="phone" id="phone" value="">
+    <br>
+  <div class="am-cf">
+	<input type="submit" name="" value="注 册" class="am-btn am-btn-success am-btn-sm am-fl">
+    <a href="{:U('User/Public/forget_password')}" class="am-btn am-btn-danger am-btn-sm am-fr" style="margin:0px 5px">忘记密码 ^_^? </a>
+    <a href="{:U('User/Public/login')}" class="am-btn am-btn-primary am-btn-sm am-fr">返回登录</a>
+  </div>
+  </form>
+</block>

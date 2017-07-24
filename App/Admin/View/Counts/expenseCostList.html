@@ -1,0 +1,93 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/footable/footable.core.css" rel="stylesheet">
+<link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<style>
+#condition-search label{float:left;padding-left:5px;}
+</style>
+<script src="__JS__/plugins/footable/footable.all.min.js"></script>
+<script src="__JS__/plugins/sweetalert/sweetalert.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-4 m-t">
+				<ol class="breadcrumb">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<li>
+						<a href="{:U('admin/Counts/expenseCounts')}" class="btn btn-outline btn-link">续费订单统计</a>
+					</li>
+					<li>
+						<strong>明细列表</strong>
+					</li>
+				</ol>
+			</div>
+			<div class="arrow list-group-item-heading">
+				<a class="btn btn-outline btn-default do-refresh" href="javascript:;"><i class="fa fa-refresh"></i> 刷新</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 fontawesome-icon-list">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>全部信息</h5>
+					</div>
+					<div class="ibox-content">
+						<div id="condition-search" class="col-sm-12">
+							<a href="{:U('admin/counts/expenseCostListExport')}&{$page_search}" class="btn btn-outline btn-warning" style="float:right" >导出</a></label>
+						</div>
+						<empty name="list">
+						<p class="text-center">很遗憾,暂时没有相关记录！！</p>
+						<else />
+						<table class="footable table table-stripped" data-filter=#filter>
+							<thead>
+								<tr>
+									<th>用户编号</th>
+									<th>imsi</th>
+									<th>所属公司</th>
+									<th>套餐名称</th>
+									<th>套餐周期（月）</th>
+									<th>支付方式</th>
+									<th>支付金额</th>
+									<th>订单时间</th>
+								</tr>
+							</thead>
+							<tbody>
+								<volist name="list" id="info">
+								<tr>
+									<td>{$info.custom_no}</td>
+									<td>{$info.imsi}</td>
+									<td>{$info.company_name}</td>
+									<td>
+										{$info.package_name}[<if condition="$info.carrieroperator eq 10">联通<elseif condition="$info.carrieroperator eq 11"/>移动<else />电信</if>]
+									</td>
+									<td>{$info.package_cycle}</td>
+									<td><if condition="$info.pay_type eq 10">微信支付<elseif condition="$info.pay_type eq 11" />支付宝<else />银行转账</if></td>
+									<td>{$info.order_account}</td>
+									<td>{$info.create_time|date='Y-m-d',###}</td>
+								</tr>
+								</volist>
+							</tbody>
+							<tfoot>
+                                <tr>
+                                    <td colspan="7" class="footable-visible">
+										<notempty name="page">
+										<label class="col-sm-3 pull-left">
+											<span class="col-sm-12 pull-left">共有{$page_count}条记录 </span> <span class="col-sm-12 pull-left"> <input type="hidden" type="page-search" page_search="{$page_search}" rel="{:U('admin/Counts/expenseCostList')}" page_num="{$page_num}" /><input type="text" name="jump_num" value="{$Think.get.p}" style="width:100px;"/> <a href="javascript:;" class="page_jump">跳转</a></span>
+										</label>
+										</notempty>
+                                        {$page}
+                                    </td>
+                                </tr>
+                            </tfoot>
+						</table>
+						</empty>
+					</div>
+				</div>
+			</div>
+        </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_foo_table.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:03 GMT -->
+</html>

@@ -1,0 +1,94 @@
+<include file="Public/base" />
+<style>
+textarea{resize:vertical}
+</style>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+						<volist name="type" id="group" key="key">
+						<eq name="key" value="1">
+                        <li class="active"><a data-toggle="tab" href="#tab-{$key}" aria-expanded="true">{$group}配置</span></a></li>
+						<else />
+                        <li class=""><a data-toggle="tab" href="#tab-{$key}" aria-expanded="false">{$group}配置</span></a></li>
+						</eq>
+						</volist>
+                    </ul>
+                    <div class="tab-content">
+						<volist name="list" id="vo" key="k">
+                        <div id="tab-{$k}" <eq name="k" value="1">class="tab-pane active"<else />class="tab-pane"</eq>>
+							<form class="form-horizontal" method="post" action="{:U('admin/config/group')}&id={$vo.group}">
+                            <div class="ibox-content">
+							<volist name="vo['config']" id="v">
+								<div class="form-group">
+								<switch name="v.type">
+									<case value="0">
+									<label class="col-sm-3 control-label">{$v.title}：</label>
+									<div class="col-sm-8">
+										<input name="config[{$v.name}]" type="text" class="form-control" value="{$v.value}"><span class="help-block m-b-none">{$v.remark}</span>
+									</div>
+									</case>
+									<case value="1">
+									<label class="col-sm-3 control-label">{$v.title}：</label>
+									<div class="col-sm-8">
+										<input name="config[{$v.name}]" type="text" class="form-control" value="{$v.value}"><span class="help-block m-b-none">{$v.remark}</span>
+									</div>
+									</case>
+									<case value="2">
+									<label class="col-sm-3 control-label">{$v.title}：</label>
+									<div class="col-sm-8">
+										<textarea name="{$v.name}" class="form-control">{$v.value}</textarea><span class="help-block m-b-none">{$v.remark}</span>
+									</div>
+									</case>
+									<case value="3">
+									<label class="col-sm-3 control-label">{$v.title}：</label>
+									<div class="col-sm-8">
+										<textarea name="{$v.name}" class="form-control">{$v.value}</textarea><span class="help-block m-b-none">{$v.remark}</span>
+									</div>
+									</case>
+									<case value="4">
+									<label class="col-sm-3 control-label">{$v.title}：</label>
+									<div class="col-sm-8">
+										<select name="{$v.name}" class="form-control">
+											<volist name=":model_field_attr($v['extra'])" id="vol">
+											<option value="{$key}">{$vol}</option>
+											</volist>
+										</select><span class="help-block m-b-none">{$v.remark}</span>
+									</div>
+									</case>
+									<case value="5">
+									<label class="col-sm-3 control-label">{$v.title}：</label>
+									<div class="col-sm-8">
+										<input name="config[{$v.name}]" type="text" class="form-control" value="{$v.value}"><span class="help-block m-b-none">{$v.remark}</span>
+									</div>
+									</case>
+								</switch>
+								</div>
+							</volist>
+								<div class="form-group">
+									<div class="col-sm-4 col-sm-offset-3">
+										<button class="btn btn-primary" type="submit">提交</button>
+									</div>
+								</div>
+							</div>
+							</form>
+                        </div>
+						</volist>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+        $(document).ready(function(){
+			window.parent.remove_load();
+		});
+    </script>
+</body>
+
+    
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/tabs_panels.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:53 GMT -->
+</html>

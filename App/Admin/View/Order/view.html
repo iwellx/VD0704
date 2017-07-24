@@ -1,0 +1,102 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Order/index')">
+					<li>
+						<a href="{:U('admin/Order/index')}" class="btn btn-outline btn-link">订单管理</a>
+					</li>
+					</if>
+					<li>
+						<strong>订单信息</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+			<div class="col-sm-12">
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>基础信息</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                订单号：{$order_info.order_sn}
+                            </li>
+                            <li class="list-group-item hide">
+                                用户名：<empty name="order_info.name">暂未绑定<else />{$order_info.name}</empty> [<if condition="$order_info.carrieroperator eq 10">联通<elseif condition="$order_info.carrieroperator eq 11"/>移动<else />电信</if>]
+                            </li>
+							<li class="list-group-item">
+								公司名称：{$order_info.company_name}
+                            </li>
+                            <li class="list-group-item hide">
+								车牌号：{$order_info.plate_number}
+                            </li>
+                            <li class="list-group-item ">
+                                IMSI：{$order_info.imsi}
+                            </li>
+                            <li class="list-group-item">
+                                变更方式：<if condition="$order_info.type eq 11">续费<elseif condition="$order_info.type eq 10" />开通<elseif condition="$order_info.type eq 12" />更换<elseif condition="$order_info.type eq 13" />销售</if>
+                            </li>
+                            <li class="list-group-item">
+                                套餐名称：{$package_info.name}
+                            </li>
+                            <li class="list-group-item">
+                                套餐服务时间：{$user_package.service_start_time|date='Y-m-d',###} 至 {$user_package.service_end_time|date='Y-m-d',###}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="col-sm-12">
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>支付信息</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                支付流水：{$order_info.pay_sn}
+                            </li>
+                            <li class="list-group-item">
+                                支付方式：<if condition="$info.pay_type eq 10">微信支付<elseif condition="$info.pay_type eq 11" />支付宝<else />银行转账</if>
+                            </li>
+                            <li class="list-group-item">
+                                支付账户：{$order_info.pay_account}
+                            </li>
+                            <li class="list-group-item">
+                                支付金额：{$order_info.order_account}
+                            </li>
+                            <li class="list-group-item">
+                                订单时间：{$order_info.create_time|date='Y-m-d H:i',###}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="hr-line-dashed"></div>
+			<div class="col-sm-4 col-sm-offset-6">
+				<button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">返回</button>
+			</div>
+		</div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

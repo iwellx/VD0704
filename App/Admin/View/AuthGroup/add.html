@@ -1,0 +1,99 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/metro-gms/easyui.css">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/color.css">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/AuthGroup/index')">
+					<li>
+						<a href="{:U('admin/AuthGroup/index')}" class="btn btn-outline btn-link">用户组</a>
+					</li>
+					</if>
+					<gt name="Think.get.pid" value="0">
+					<li>
+						<strong>添加子组</strong>
+					</li>
+					<else />
+					<li>
+						<strong>添加用户组</strong>
+					</li>
+					</gt>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('admin/AuthGroup/add')}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属上级组：</label>
+                                <div class="col-sm-10">
+									<select name="pid" class="easyui-combotree" style="height:34px;width: 100%;padding: 7px 12px;" data-options="value:'{:I('get.pid',0)}',url:'{:U('Admin/Function/get_auth_group')}&pid=-1&r_type=json',multiple:false,required:false,editable:false">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">组名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">组权限：</label>
+                                <div class="col-sm-10">
+									<select name="rules[]" class="easyui-combotree" style="height:34px;width: 100%;padding: 7px 12px;" data-options="value:'',url:'{:U("Admin/Function/get_auth_rule")}&r_type=json',valueField:'id',textField:'text',multiple:true,cascadeCheck:false,required:false,editable:false">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="remark" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-10">
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="1" checked="checked"> 启用</label>
+                                    </div>
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="0"> 禁用</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+									<input type="hidden" name="jump_pid" value={$Think.get.pid} />
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

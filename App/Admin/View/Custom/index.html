@@ -1,0 +1,171 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/footable/footable.core.css" rel="stylesheet">
+<link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<style>
+#condition-search label{float:left;padding-left:5px;}
+</style>
+<script src="__JS__/plugins/footable/footable.all.min.js"></script>
+<script src="__JS__/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="__JS__/plugins/suggest/bootstrap-suggest.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-4 m-t">
+				<ol class="breadcrumb">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<li>
+						<a href="{:U('admin/Custom/index')}" class="btn btn-outline btn-link">客户管理</a>
+					</li>
+					<li>
+						<strong>客户列表</strong>
+					</li>
+				</ol>
+			</div>
+			<div class="arrow list-group-item-heading">
+				<a class="btn btn-outline btn-success" href="{:U('Admin/Custom/add')}"><i class="fa fa-plus"></i> 添加客户</a>
+				<a class="btn btn-outline btn-default do-refresh" href="javascript:;"><i class="fa fa-refresh"></i> 刷新</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 fontawesome-icon-list">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>全部信息{:I('get.id')}</h5>
+						<div class="ibox-tools"><a class="btn btn-primary btn-xs do-search" href="javascript:;"><i class="fa fa-search"></i> 搜索</a></div>
+					</div>
+					<div class="ibox-content">
+						<div id="condition-search" <eq name="Think.get.search" value="1">style="display: block;"<else />style="display: none;"</eq> class="col-sm-12">
+							<form method="get">
+								<label class="input-group col-sm-4">
+									<input type="text" class="form-control" id="package" name="company_name" placeholder='请输入公司名,全部敲空格' value="{$Think.get.company_name}">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu">
+										</ul>
+									</span>
+								</label>
+								<label class="input-group col-sm-4"><span class="input-group-addon">SIM</span><input name="card_number" value="<notempty name="Think.get.card_number">{$Think.get.card_number}</notempty>" placeholder="请输入SIM卡号" class="form-control"></label>
+								<label class="input-group col-sm-4"><span class="input-group-addon">IMSI</span><input name="imsi" value="<notempty name="Think.get.imsi">{$Think.get.imsi}</notempty>" placeholder="请输入IMSI" class="form-control"></label>
+								<label class="input-group col-sm-8">
+									<input type="hidden" name="m" value="admin" />
+									<input type="hidden" name="a" value="index" />
+									<input type="hidden" name="c" value="custom" />
+								</label>
+								<label class="col-sm-4 text-right pull-right"><button type="submit" class="btn btn-outline btn-primary">立即搜索</button> <a href="{:U('admin/custom/index',array('search'=>1,'p'=>$_GET['p']))}" class="btn btn-outline btn-default">重置搜索</a> <a href="{:U('admin/custom/index',array('p'=>$_GET['p']))}" class="btn btn-outline btn-warning">关闭搜索</a></label>
+							</form>
+						</div>
+						<empty name="list">
+						<p class="text-center">很遗憾,暂时没有相关记录！！</p>
+						<else />
+						<table class="footable table table-stripped" data-filter=#filter>
+							<thead>
+								<tr>
+									<th>客户编号</th>
+									<th>imsi</th>
+									<th>运营商</th>
+									<th>所属公司</th>
+									<th>套餐</th>
+									<th>服务时间</th>
+									<th>状态</th>
+									<th class="center">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<volist name="list" id="info">
+								<tr>
+									<td>{$info.custom_no}</td>
+									<td>{$info.imsi}</td>
+									<td><if condition="$info.carrieroperator eq 10">联通<elseif condition="$info.carrieroperator eq 11"/>移动<else />电信</if></td>
+									<td>{$info.company_name}</td>
+									<td>
+										<volist name="info.has_package_list" id="package" key="k">
+										{$k}、{$package.name}[<if condition="$package.carrieroperator eq 10">联通<elseif condition="$package.carrieroperator eq 11"/>移动<else />电信</if>]<br />
+										</volist>
+									</td>
+									<td>{$info.service_start_time|date='Y-m',###} - {$info.service_end_time|date='Y-m',###}</td>
+									<td class="center"><if condition="$info.custom_state eq 10">测试期<elseif condition="$info.custom_state eq 11" />沉默期<elseif condition="$info.custom_state eq 12" />服务期<else />已注销</if></td>
+									<td class="center">
+										<if condition="Is_Auth('Admin/Custom/edit')"><a class="btn btn-white btn-sm" href="{:U('Admin/Custom/edit',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 修改 </a></if> 
+										<if condition="Is_Auth('Admin/Custom/del')"><a class="btn btn-white btn-sm del" tar="{:U('Admin/Custom/del',array('id'=>$info['id']))}"><i class="fa fa-recycle"></i>  删除 </a></if>
+										<if condition="Is_Auth('Admin/Custom/view')"><a class="btn btn-white btn-sm" href="{:U('Admin/Custom/view',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 查看</a></if> 
+										<if condition="Is_Auth('Admin/Custom/bindPackage')"><a class="btn btn-white btn-sm" href="{:U('Admin/Custom/bindPackage',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 绑定套餐</a></if> 
+									</td>
+								</tr>
+								</volist>
+							</tbody>
+							<tfoot>
+                                <tr>
+                                    <td colspan="8" class="footable-visible">
+										<notempty name="page">
+										<label class="col-sm-3 pull-left">
+											<span class="col-sm-12 pull-left">共有{$page_count}条记录 </span> <span class="col-sm-12 pull-left"> <input type="hidden" type="page-search" page_search="{$page_search}" rel="{:U('admin/custom/index')}" page_num="{$page_num}" /><input type="text" name="jump_num" value="{$Think.get.current_p}" style="width:100px;"/> <a href="javascript:;" class="page_jump">跳转</a></span>
+										</label>
+										</notempty>
+                                        {$page}
+                                    </td>
+                                </tr>
+                            </tfoot>
+						</table>
+						</empty>
+					</div>
+				</div>
+			</div>
+        </div>
+    <script>
+        $(document).ready(function(){
+			window.parent.remove_load();
+			var taobaoBsSuggest = $("#package").bsSuggest({
+				indexId: 2,             //data.value 的第几个数据，作为input输入框的内容
+				indexKey: 1,            //data.value 的第几个数据，作为input输入框的内容
+				allowNoKeyword: false,  //是否允许无关键字时请求数据。为 false 则无输入时不执行过滤请求
+				multiWord: true,        //以分隔符号分割的多关键字支持
+				separator: ",",         //多关键字支持时的分隔符，默认为空格
+				getDataMethod: "url",   //获取数据的方式，总是从 URL 获取
+				showHeader: true,       //显示多个字段的表头
+				effectiveFieldsAlias:{Id: "序号",Keyword: "名称"},
+				url: "{:U('admin/counts/getCompanyList')}&p=", /*优先从url ajax 请求 json 帮助数据，注意最后一个参数为关键字请求参数*/
+				processData: function(json){     // url 获取数据时，对数据的处理，作为 getData 的回调函数
+					var i, len, data = {value: []};
+					if(!json || !json.result || json.result.length == 0) {
+						return false;
+					}
+
+					console.log(json);
+					len = json.result.length;
+
+					for (i = 0; i < len; i++) {
+						data.value.push({
+							"Id": i+1,
+							"Keyword": json.result[i][0]
+						});
+					}
+					console.log(data);
+					return data;
+				}
+			});
+			$('.del').click(function () {
+				var href = $(this).attr('tar');
+				swal({
+					title: "您确定要删除该客户吗？",
+					text: "删除后将无法恢复，请谨慎操作！",
+					type: "warning",
+					showCancelButton: true,
+					cancelButtonText: "取消",
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "删除",
+					closeOnConfirm: false
+				}, function () {
+					location.href=href;
+				});
+			});
+		});
+    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_foo_table.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:03 GMT -->
+</html>

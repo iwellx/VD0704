@@ -1,0 +1,57 @@
+<extend name="Public:base" />
+
+<block name="title" >用户中心</block>
+
+<block name="body" >
+  <!-- 顶部提示 starp -->
+  <div class="am-cf am-padding">
+    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">用户中心</strong> / <small>Personal Center</small></div>
+  </div>
+  <!-- 顶部提示 end --> 
+  <!-- 主体区域 starp -->
+  <div class="am-margin">
+    <div class="am-tab-panel am-fade am-in am-active">
+      <div class="am-g am-margin-top">
+        <div class="am-u-sm-4 am-u-md-2 am-text-right">昵称[用户名]</div>
+        <div class="am-u-sm-8 am-u-md-4 am-u-end">
+          {$UserInfo['nickname']} [{$UserInfo['username']}]
+        </div>
+      </div>
+      <div class="am-g am-margin-top">
+        <div class="am-u-sm-4 am-u-md-2 am-text-right">积分</div>
+        <div class="am-u-sm-8 am-u-md-4 am-u-end">
+          {$UserInfo['point']}
+        </div>
+      </div>
+      <div class="am-g am-margin-top">
+        <div class="am-u-sm-4 am-u-md-2 am-text-right">余额</div>
+        <div class="am-u-sm-8 am-u-md-4 am-u-end">
+          ￥ {$UserInfo['amount']} 元
+        </div>
+      </div>
+      <div class="am-g am-margin-top">
+        <div class="am-u-sm-4 am-u-md-2 am-text-right">邮箱</div>
+        <div class="am-u-sm-8 am-u-md-4 am-u-end">
+          {$UserInfo['email']}
+        </div>
+      </div>
+      <div class="am-g am-margin-top">
+        <div class="am-u-sm-4 am-u-md-2 am-text-right">上次登录IP / 时间</div>
+        <div class="am-u-sm-8 am-u-md-4 am-u-end">
+          <if condition="$UserInfo['last_login_time'] neq 0">
+          	{$UserInfo['last_login_ip']} / {$UserInfo['last_login_time']|date='Y-m-d H:i:s',###}
+          <else />
+          	第一次登录
+          </if>
+        </div>
+      </div>
+      <div class="am-g am-margin-top">
+        <div class="am-u-sm-4 am-u-md-2 am-text-right">备注</div>
+        <div class="am-u-sm-8 am-u-md-6 am-u-end">
+          {$UserInfo['remark']}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 主体区域 end --> 
+</block>

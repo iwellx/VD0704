@@ -1,0 +1,23 @@
+<extend name="Public:public" />
+
+<block name="title">登录用户中心</block>
+
+<block name="body">
+  <h2>登录</h2>
+  <hr>
+  <form method="post" class="am-form">
+    <label for="username">用户名:</label>
+    <input type="text" name="username" id="username" value="">
+    <br>
+    <label for="password">密码:</label>
+    <input type="password" name="password" id="password" value="">
+    <br>
+    <label for="remember-me">
+      <input id="remember-me" name="rember_password" type="checkbox">
+      记住密码 </label>
+    <br />
+    <div class="am-cf">
+      <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
+      <a href="{:U('User/Public/forget_password')}" class="am-btn am-btn-danger am-btn-sm am-fr">忘记密码 ^_^? </a> <a href="{:U('User/Public/reg')}" class="am-btn am-btn-success am-btn-sm am-fr" style="margin:0px 5px">注册</a> </div>
+  </form>
+</block>

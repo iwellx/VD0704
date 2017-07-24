@@ -1,0 +1,94 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/footable/footable.core.css" rel="stylesheet">
+<script src="__JS__/plugins/footable/footable.all.min.js"></script>
+<link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<script src="__JS__/plugins/sweetalert/sweetalert.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-4 m-t">
+				<ol class="breadcrumb">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<li>
+						<strong>配置列表</strong>
+					</li>
+				</ol>
+			</div>
+			
+			<div class="arrow list-group-item-heading">
+				<a class="btn btn-outline btn-info do-search" href="javascript:;"><i class="fa fa-search"></i> 搜索</a>
+				<a class="btn btn-outline btn-success" href="{:U('Admin/Config/add')}"><i class="fa fa-plus"></i> 添加配置</a>
+				<a class="btn btn-outline btn-default do-refresh" href="javascript:;"><i class="fa fa-refresh"></i> 刷新</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 fontawesome-icon-list">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<table class="footable table table-stripped" data-filter=#filter>
+							<thead>
+								<tr>
+									<th>配置名称</th>
+									<th>配置类型</th>
+									<th>配置说明</th>
+									<th>状态</th>
+									<th>创建时间</th>
+									<th class="center">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<volist name="list" id="info">
+								<tr>
+									<td>{$info.name}</td>
+									<td>{$info.title}</td>
+									<td>{$info.remark|msubstr=0,15,"utf-8",true}</td>
+									<td class="center"><eq name="info.status" value="1">启用<else />禁用</eq></td>
+									<td class="center">{$info.create_time|date='Y-m-d',###}</td>
+									<td class="center">
+										<if condition="Is_Auth('Admin/Config/edit')"><a class="btn btn-white btn-sm" href="{:U('Admin/Config/edit',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 修改 </a></if> 
+										<if condition="Is_Auth('Admin/Config/del')"><a class="btn btn-white btn-sm del" tar="{:U('Admin/Config/del',array('id'=>$info['id']))}"><i class="fa fa-recycle"></i>  删除 </a></if> 
+										<if condition="Is_Auth('Admin/Config/view')"><a class="btn btn-white btn-sm" href="{:U('Admin/Config/view',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 查看 </a></if>
+									</td>
+								</tr>
+								</volist>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="6">
+										{$page}
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+        </div>
+    <script>
+        $(document).ready(function(){
+			window.parent.remove_load();
+			$(".footable").footable();
+			$('.del').click(function () {
+				var href = $(this).attr('tar');
+				swal({
+					title: "您确定要删除这条配置信息吗？",
+					text: "删除后将无法恢复，请谨慎操作！",
+					type: "warning",
+					showCancelButton: true,
+					cancelButtonText: "取消",
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "删除",
+					closeOnConfirm: false
+				}, function () {
+					location.href=href;
+				});
+			});
+		});
+    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_foo_table.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:03 GMT -->
+</html>

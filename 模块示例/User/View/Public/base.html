@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js fixed-layout">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title><block name="title">{$title}</block> - {:C('WEB_SITE_TITLE')}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="icon" type="image/png" href="__IMG__/favicon.png">
+<link rel="apple-touch-icon-precomposed" href="__IMG__/app-icon72x72@2x.png">
+<link rel="stylesheet" href="__CSS__/amazeui.min.css"/>
+<link rel="stylesheet" href="__CSS__/admin.css">
+</head>
+<body>
+<block name="header"><include file="Public/header" /></block>
+<div class="am-cf admin-main"> 
+  <!-- sidebar start -->
+    <block name="left"><include file="Public/left" /></block>
+  <!-- sidebar end -->
+  
+  <!-- content start -->
+  <div class="admin-content">
+    <block name="body"></block>
+    <block name="footer"><include file="Public/footer" /></block>
+  </div>
+  <!-- content end --> 
+</div>
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a> 
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="__JS__/amazeui.ie8polyfill.min.js"></script>
+<![endif]--> 
+<!--[if (gte IE 9)|!(IE)]><!--> 
+<script src="__JS__/jquery.min.js"></script> 
+<!--<![endif]--> 
+<script src="__JS__/amazeui.min.js"></script> 
+<script src="__JS__/app.js"></script>
+</body>
+</html>

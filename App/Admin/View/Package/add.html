@@ -1,0 +1,181 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/metro-gms/easyui.css">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/color.css">
+<style>
+textarea{resize:vertical}
+.input-daterange{padding-left:15px;}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Package/index')">
+					<li>
+						<a href="{:U('admin/Package/index')}" class="btn btn-outline btn-link">套餐列表</a>
+					</li>
+					</if>
+					<li>
+						<strong>添加套餐</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('admin/Package/add')}">
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">运营商：</label>
+                                <div class="col-sm-10">
+                                    <select name="carrieroperator" class="form-control m-b">
+                                        <option value="10">联通</option>
+                                        <option value="11">移动</option>
+                                        <option value="12">电信</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">运营商编号<font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_from" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">套餐名称<font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" value="" class="form-control" data-mask="9999999999-9" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">套餐价格<font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group"><span class="input-group-addon">¥</span>
+                                        <input type="text" name="price" value="{$info.price}" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">套餐参考价：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group"><span class="input-group-addon">¥</span>
+                                        <input type="text" name="package_rp" value="{$info.package_rp}" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">套餐续费价<font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group "><span class="input-group-addon">¥</span>
+                                        <input type="text" name="expense_price" value="{$info.expense_price}" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">续费参考价：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group"><span class="input-group-addon">¥</span>
+                                        <input type="text" name="expense_rp" value="{$info.expense_rp}" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">套餐流量<font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" name="package_value" value="" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white" tabindex="-1">兆</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">套餐周期<font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+										<input type="hidden" name="cycle_unit" value="month" />
+                                        <input type="text" name="cycle_value" value="" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white" tabindex="-1">周期单位</button>
+                                            <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li class="cycle_unit"><a href="javascript:;" rel="year">年</a></li>
+                                                <li class="cycle_unit"><a href="javascript:;" rel="month">月</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">流量周期：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+										<input type="hidden" name="tag" value="10" />
+										<input type="hidden" name="unit" value="month" />
+                                        <input type="text" name="value" value="" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white" tabindex="-1">月</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">套餐描述：</label>
+								<div class="col-sm-10">
+									<textarea name="description" class="form-control"></textarea>
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-10">
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="1" checked="checked"> 启用</label>
+                                    </div>
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="0"> 禁用</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+	$(function(){
+		$('.cycle_unit').click(function(){
+			var v = $(this).children().attr('rel');
+			$(this).parent().prev().prev().text($(this).children().text());
+			$('input[name="cycle_unit"]').attr('value',v);
+		})
+		$('.unit').click(function(){
+			var v = $(this).children().attr('rel');
+			$(this).parent().prev().prev().text($(this).children().text());
+			$('input[name="unit"]').attr('value',v);
+		})
+	})
+	
+	</script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

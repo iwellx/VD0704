@@ -1,0 +1,127 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/footable/footable.core.css" rel="stylesheet">
+<style>
+#condition-search label{float:left;padding-left:5px;}
+</style>
+<script src="__JS__/plugins/footable/footable.all.min.js"></script>
+<link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<script src="__JS__/plugins/sweetalert/sweetalert.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-4 m-t">
+				<ol class="breadcrumb">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<li>
+						<a href="{:U('admin/Expenses/batch')}" class="btn btn-outline btn-link">批量续费管理</a>
+					</li>
+					<li>
+						<strong>批量续费列表</strong>
+					</li>
+				</ol>
+			</div>
+			<div class="arrow list-group-item-heading">
+				<a href="{:U('admin/expenses/batchImport')}" class="btn btn-outline btn-success"><i class="fa fa-plus"></i> 批量续费</a>
+				<a class="btn btn-outline btn-default do-refresh" href="javascript:;"><i class="fa fa-refresh"></i> 刷新</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 fontawesome-icon-list">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>全部信息</h5>
+						<div class="ibox-tools"><a class="btn btn-primary btn-xs do-search" href="javascript:;"><i class="fa fa-search"></i> 搜索</a></div>
+					</div>
+					<div class="ibox-content">
+						<div id="condition-search" <eq name="Think.get.search" value="1">style="display: block;"<else />style="display: none;"</eq> class="col-sm-12">
+							<form method="get">
+								<label class="input-group col-sm-4"><span class="input-group-addon">套餐名称</span><input name="package_name" value="<notempty name="Think.get.package_name">{$Think.get.package_name}</notempty>" placeholder="请输入套餐名称" class="form-control"></label>
+								<label class="input-group col-sm-4"><span class="input-group-addon">IMSI</span><input name="imsi" value="<notempty name="Think.get.imsi">{$Think.get.imsi}</notempty>" placeholder="请输入IMSI" class="form-control"></label>
+								<label class="input-group col-sm-8">
+									<input type="hidden" name="m" value="admin" />
+									<input type="hidden" name="a" value="batch" />
+									<input type="hidden" name="c" value="Expenses" />
+								</label>
+								<label class="col-sm-4 text-right pull-right"><button type="submit" class="btn btn-outline btn-primary">立即搜索</button> <a href="{:U('admin/Expenses/batch',array('search'=>1,'p'=>$_GET['p']))}" class="btn btn-outline btn-default">重置搜索</a> <a href="{:U('admin/Expenses/batch',array('p'=>$_GET['p']))}" class="btn btn-outline btn-warning">关闭搜索</a></label>
+							</form>
+						</div>
+						<empty name="list">
+						<p class="text-center">很遗憾,暂时没有相关记录！！</p>
+						<else />
+						<table class="footable table table-stripped" data-filter=#filter>
+							<thead>
+								<tr>
+
+									<th>订单编号</th>
+									<th>IMSI</th>
+									<th>套餐ID</th>
+									<th>变更方式</th>
+									<th>操作时间</th>
+									<!-- <th>用户名</th>
+									<th>车牌号</th> -->
+									<!-- <th>运营商</th>
+									<th>套餐名称</th>
+									<th>续费时间</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<volist name="list" id="info">
+								<tr>
+									<td>{$info.renewal_order_sn}</td>
+									<td>{$info.imsi}</td>
+									<td>{$info.package_sn}</td>
+									<td>续费</td>
+									<td>{$info.create_time|date='Y-m-d h:i:s',###}</td>
+									<!-- <td>{$info.name}</td>
+									<td>{$info.plate_number}</td> -->
+									<!-- <td><if condition="$info.carrieroperator eq 10">联通<elseif condition="$info.carrieroperator eq 11"/>移动<else />电信</if></td>
+									<td>{$info.package_name}</td>
+									<td>{$info.expense_time}月</td> -->
+								</tr>
+								</volist>
+							</tbody>
+							<tfoot>
+                                <tr>
+                                    <td colspan="6" class="footable-visible">
+										<notempty name="page">
+										<label class="col-sm-3 pull-left">
+											<span class="col-sm-12 pull-left">共有{$page_count}条记录 </span> <span class="col-sm-12 pull-left"> <input type="hidden" type="page-search" page_search="{$page_search}" rel="{:U('admin/expenses/batch')}" page_num="{$page_num}" /><input type="text" name="jump_num" value="{$Think.get.current_p}" style="width:100px;"/> <a href="javascript:;" class="page_jump">跳转</a></span>
+										</label>
+										</notempty>
+                                        {$page}
+                                    </td>
+                                </tr>
+                            </tfoot>
+						</table>
+						</empty>
+					</div>
+				</div>
+			</div>
+        </div>
+    <script>
+        $(document).ready(function(){
+			window.parent.remove_load();
+			$('.del').click(function () {
+				var href = $(this).attr('tar');
+				swal({
+					title: "您确定要删除该用户吗？",
+					text: "删除后将无法恢复，请谨慎操作！",
+					type: "warning",
+					showCancelButton: true,
+					cancelButtonText: "取消",
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "删除",
+					closeOnConfirm: false
+				}, function () {
+					location.href=href;
+				});
+			});
+		});
+    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_foo_table.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:03 GMT -->
+</html>

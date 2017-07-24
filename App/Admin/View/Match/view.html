@@ -1,0 +1,110 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Company/index')">
+					<li>
+						<a href="{:U('admin/Company/index')}" class="btn btn-outline btn-link">企业列表</a>
+					</li>
+					</if>
+					<li>
+						<strong>公司信息</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+			<div class="col-sm-12">
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>基本资料</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item ">
+								<eq name="info.status" value="1"><span class="badge badge-info">正常</span><else /><span class="badge badge-danger">禁用</span></eq>
+                                公司名：{$info.name}
+                            </li>
+                            <li class="list-group-item">
+								公司全称：{$info.unicom_name}
+                            </li>
+                            <li class="list-group-item">
+								公司地址：{$info.address}
+                            </li>
+                            <li class="list-group-item ">
+                                联系人：{$info.contact}
+                            </li>
+                            <li class="list-group-item">
+                                邮箱：{$info.email}
+                            </li>
+                            <li class="list-group-item">
+                                手机：{$info.tel}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="col-sm-6">
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>账户信息</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                微信账号：{$info.wx_number}
+                            </li>
+                            <li class="list-group-item">
+                                银行卡号：{$info.bank_number}
+                            </li>
+                            <li class="list-group-item ">
+                                支付宝号：{$info.alipay_number}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="col-sm-6">
+                <div class="ibox float-e-margins">
+					<div class="ibox-title">
+                        <h5>其他信息</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                备注：{$info.remark}
+                            </li>
+                            <li class="list-group-item ">
+                                创建时间：{$info.create_time|date='Y-m-d H:i',###}
+                            </li>
+                            <li class="list-group-item">
+                                更新时间：{$info.update_time|date='Y-m-d H:i',###}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="hr-line-dashed"></div>
+			<div class="col-sm-4 col-sm-offset-6">
+				<button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">返回</button>
+			</div>
+		</div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

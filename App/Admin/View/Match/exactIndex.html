@@ -1,0 +1,142 @@
+<include file="Public/base" />
+<style>
+    #condition-search label{float:left;padding-left:5px;}
+</style>
+<link href="__CSS__/plugins/footable/footable.core.css" rel="stylesheet">
+<link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<link href="__CSS__/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<script src="__JS__/plugins/footable/footable.all.min.js"></script>
+<script src="__JS__/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="__JS__/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="__JS__/plugins/suggest/bootstrap-suggest.min.js"></script>
+<body class="gray-bg">
+<div class="wrapper animated fadeInRight">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-4 m-t">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+                </li>
+                <li>
+                    <strong>完全匹配</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 fontawesome-icon-list">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>选择时间进行搜索</h5>
+                </div>
+                <div class="ibox-content" >
+                    <div id="condition-search" style="display: block; float: left" class="col-sm-8">
+                        <form method="get">
+                                <input type="hidden" name="m" value="admin" />
+                                <input type="hidden" name="a" value="exactIndex" />
+                                <input type="hidden" name="c" value="match" />
+
+                            <label class="input-group input-daterange col-sm-4">
+                                <span class="input-group-addon">匹配时间</span>
+                                <input type="text" name="start" placeholder="{: date('Y.m', strtotime('first day of previous month'))}" value="<notempty name="Think.get.start">{$Think.get.start}</notempty>" class="form-control">
+                            </label>
+                            <button type="submit" class="btn btn-outline btn-primary">立即搜索</button>
+
+                        </form>
+                    </div>
+
+                    <div id="addTask" style="display: none; float: left" >
+                        <a id="add_task" href="{:U('admin/match/exactAdd',array('start' => $_GET['start']))}" class="btn btn-outline btn-success">添加任务</a>
+                    </div>
+
+                    <div id="content" style="display: block" >
+
+                        <table class="footable table table-stripped" data-filter=#filter>
+                            <thead>
+                            <tr>
+                                <th>任务ID</th>
+                                <th>创建时间</th>
+                                <th>执行状态</th>
+                                <th class="center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="list" id="info">
+                                <tr>
+                                    <td id="task_id">{$info.task_number}</td>
+                                    <td>{$info.create_time|date="Y-m",###}</td>
+                                    <td><if condition="$info.status eq 0"><h5 style="color: red">未执行</h5><elseif condition="$info.status eq 1"/><h5 style="color: sandybrown">执行中</h5><else /><h5 style="color: green">已执行</h5></if></td>
+                                    <td class="center">
+                                        <if condition="Is_Auth('Admin/Custom/edit')"><a class="btn btn-white btn-sm" href="{:U('Admin/Custom/edit',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 修改 </a></if>
+                                        <if condition="Is_Auth('Admin/Custom/del')"><a class="btn btn-white btn-sm del" tar="{:U('Admin/Custom/del',array('id'=>$info['id']))}"><i class="fa fa-recycle"></i>  删除 </a></if>
+                                        <if condition="Is_Auth('Admin/Custom/view')"><a class="btn btn-white btn-sm" href="{:U('Admin/Custom/view',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 查看</a></if>
+                                        <if condition="Is_Auth('Admin/Custom/bindPackage')"><a class="btn btn-white btn-sm" href="{:U('Admin/Custom/bindPackage',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i>执行</a></if>
+                                        <if condition="Is_Auth('Admin/Custom/edit')"><a class="btn btn-white btn-sm" href="{:U('Admin/Custom/edit',array('id'=>$info['id']))}"><i class="fa fa-check-circle-o"></i> 重置 </a></if>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="8" class="footable-visible">
+                                    <notempty name="page">
+                                        <label class="col-sm-3 pull-left">
+                                            <span class="col-sm-12 pull-left">共有{$page_count}条记录 </span> <span class="col-sm-12 pull-left"> <input type="hidden" type="page-search" page_search="{$page_search}" rel="{:U('admin/custom/index')}" page_num="{$page_num}" /><input type="text" name="jump_num" value="{$Think.get.current_p}" style="width:100px;"/> <a href="javascript:;" class="page_jump">跳转</a></span>
+                                        </label>
+                                    </notempty>
+                                    {$page}
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <script>
+                        $(document).ready(function(){
+                            $(".input-daterange").datepicker({minViewMode:'months',format:'yyyy-mm',endDate : new Date(),keyboardNavigation:!1,forceParse:!1,autoclose:!0});
+                            var taobaoBsSuggest = $("#package").bsSuggest({
+                                indexId: 2,             //data.value 的第几个数据，作为input输入框的内容
+                                indexKey: 1,            //data.value 的第几个数据，作为input输入框的内容
+                                allowNoKeyword: false,  //是否允许无关键字时请求数据。为 false 则无输入时不执行过滤请求
+                                multiWord: true,        //以分隔符号分割的多关键字支持
+                                separator: ",",         //多关键字支持时的分隔符，默认为空格
+                                getDataMethod: "url",   //获取数据的方式，总是从 URL 获取
+                                showHeader: true,       //显示多个字段的表头
+                                effectiveFieldsAlias:{Id: "序号",Keyword: "名称"},
+                                url: "{:U('admin/counts/getCompanyList')}&p=", /*优先从url ajax 请求 json 帮助数据，注意最后一个参数为关键字请求参数*/
+                                processData: function(json){     // url 获取数据时，对数据的处理，作为 getData 的回调函数
+                                    var i, len, data = {value: []};
+                                    if(!json || !json.result || json.result.length == 0) {
+                                        return false;
+                                    }
+
+                                    console.log(json);
+                                    len = json.result.length;
+
+                                    for (i = 0; i < len; i++) {
+                                        data.value.push({
+                                            "Id": i+1,
+                                            "Keyword": json.result[i][0]
+                                        });
+                                    }
+                                    console.log(data);
+                                    return data;
+                                }
+                            });
+                        });
+                    </script>
+                    <!--判断-->
+                    <script>
+                        $().ready(function () {
+                            var result = $('#task_id').text();
+                            if (result === ''){
+                                $('#addTask').css('display','block');
+                                $('#content').css('display','none');
+                            }
+                        })
+                    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_foo_table.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:03 GMT -->
+</html>

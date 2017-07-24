@@ -1,0 +1,39 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<script src="__JS__/plugins/sweetalert/sweetalert.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+		var jump_url = "{$jumpUrl}";
+		var wait_time = "{$waitSecond}";
+		wait_timer = wait_time*1000;
+		var message = "{$message}";
+		var login_url = "{:U('public/login')}";
+        $(document).ready(function(){
+			swal({
+				title:"",
+				text:message,
+				type:"success",
+				timer:wait_timer,
+				confirmButtonColor:"#DD6B55",
+				confirmButtonText:"立即跳转",
+				closeOnConfirm:false,
+			},function(isConfirm){
+				if(isConfirm){
+					location.href = jump_url;
+				}
+			})
+		});
+    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/sweetalert.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:56 GMT -->
+</html>

@@ -1,0 +1,189 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/metro-gms/easyui.css">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/color.css">
+<style>
+textarea{resize:vertical}
+.input-daterange{padding-left:15px;}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Custom/index')">
+					<li>
+						<a href="{:U('admin/Custom/index')}" class="btn btn-outline btn-link">客户列表</a>
+					</li>
+					</if>
+					<li>
+						<strong>添加客户</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('admin/Custom/add')}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">客户名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" value="" class="form-control length_check" length='11' placeholder="手机号" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">所属公司 <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <select name="company" class="form-control m-b">
+										<option value="">请选择客户所在公司</option>
+										<volist name="company_list" id="company">
+                                        <option value="{$company.id}">{$company.unicom_name}</option>
+										</volist>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">IMSI <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="imsi" class="form-control length_check" length='15' placeholder="">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">运营商 <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <select name="carrieroperator" class="form-control m-b">
+                                        <option value="10">联通</option>
+                                        <option value="11">移动</option>
+                                        <option value="12">电信</option>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">SIM卡号 <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_number" class="form-control length_check" length='13' placeholder="">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">运营商编号 <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_from" class="form-control" value="" placeholder="">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">SIM卡状态：</label>
+                                <div class="col-sm-10">
+                                    <select name="custom_state" class="form-control m-b">
+                                        <option value="10">测试期</option>
+                                        <option value="11">沉默期</option>
+                                        <option value="12">服务期</option>
+                                        <option value="13">已注销</option>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">测试期长：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" name="test_days" value="" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white" tabindex="-1">天</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">沉默期长：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" name="slience_days" value="" class="form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white" tabindex="-1">天</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">ICCID <font color="red">*</font>：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="iccid" class="form-control length_check" length='20' placeholder="">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">车牌号：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="plate_number" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">特殊标签：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="tag" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-10">
+									<textarea name="remark" class="form-control"></textarea>
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-10">
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="1" checked="checked"> 启用</label>
+                                    </div>
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="0"> 禁用</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+	$(function(){
+		$('.length_check').blur(function(){
+			var v = $.trim($(this).val());
+			var l = $(this).attr('length');
+			if(v.length>l)
+			{
+				s = v.substring(0,l);
+				r = s.length;
+			}else{
+				r = v.length;
+			}
+			$(this).val(s);
+			$(this).next().text('你当前已输入'+r);
+		})
+	})
+	</script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

@@ -1,0 +1,170 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/metro-gms/easyui.css">
+<link rel="stylesheet" type="text/css" href="__JS__/plugins/easyui/themes/color.css">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__JS__/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/AuthRule/index')">
+					<li>
+						<a href="{:U('admin/AuthRule/index')}" class="btn btn-outline btn-link">菜单</a>
+					</li>
+					</if>
+					<gt name="Think.get.pid" value="0">
+					<li>
+						<strong>添加子菜单</strong>
+					</li>
+					<else />
+					<li>
+						<strong>添加菜单</strong>
+					</li>
+					</gt>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('admin/AuthRule/add')}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">上级菜单：</label>
+                                <div class="col-sm-10">
+									<select name="pid" class="easyui-combotree" style="height:34px;width: 100%;padding: 7px 12px;" data-options="value:'{:I('get.pid','一级菜单')}',url:'{:U('Admin/Function/get_auth_rule')}&pid=-1&r_type=json',multiple:false,required:false,editable:false">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">标题：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">菜单类型：</label>
+                                <div class="col-sm-10">
+                                    <select name="type" class="form-control m-b">
+										<option value="2" >菜单</option>
+										<option value="1" >节点</option>
+										<option value="3" >外链</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">菜单类型值：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" value="" class="form-control" aria-required="true" aria-invalid="true" class="error">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">图标：</label>
+                                <div class="col-sm-4">
+                                    <select name="icon" class="form-control m-b">
+										<option selected="selected" value="" selected="selected">请选择</option>
+										<option value="home">图标1</option>
+										<option value="th-large">图标2</option>
+										<option value="columns">图标3</option>
+										<option value="globe">图标4</option>
+										<option value="bar-chart-o">图标5</option>
+										<option value="envelope">图标6</option>
+										<option value="edit">图标7</option>
+										<option value="files-o">图标8</option>
+										<option value="table">图标9</option>
+										<option value="picture-o">图标10</option>
+										<option value="sitemap">图标11</option>
+										<option value="comments">图标12</option>
+										<option value="user">图标13</option>
+										<option value="line-chart">图标14</option>
+										<option value="pie-chart">图标15</option>
+										<option value="calendar">图标16</option>
+										<option value="cog">图标17</option>
+										<option value="flag">图标18</option>
+										<option value="folder-open-o">图标19</option>
+										<option value="sliders">图标20</option>
+										<option value="cubes">图标21</option>
+										<option value="bars">图标22</option>
+										<option value="users">图标23</option>
+										<option value="share-alt">图标24</option>
+										<option value="weixin">图标25</option>
+                                    </select><i class="fa fa-th-large"></i>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">附加规则：</label>
+								<div class="col-sm-10">
+									<textarea name="remark" class="form-control"></textarea>
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">隐藏：</label>
+                                <div class="col-sm-10">
+									<div class="radio">
+                                        <label><input type="radio" name="hide" value="0" checked="checked"> 显示</label>
+                                    </div>
+									<div class="radio">
+                                        <label><input type="radio" name="hide" value="1"> 隐藏</label>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-10">
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="1" checked="checked"> 启用</label>
+                                    </div>
+									<div class="radio">
+                                        <label><input type="radio" name="status" value="0"> 禁用</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">排序：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="sort" value="255" class="form-control"><span class="help-block m-b-none">同级菜单有效</span>
+                                </div>
+                            </div>
+							
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+									<input type="hidden" name="jump_pid" value={$Think.get.pid} />
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+	$(function(){
+		//自定义脚本
+			$(function(){
+				//变更后输出样例
+				$("form select[name='icon']").on('click keyup',function(){
+					$(this).next().removeClass().addClass('fa').addClass('fa-'+$(this).val());
+				}).click();
+			});
+	})
+	</script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

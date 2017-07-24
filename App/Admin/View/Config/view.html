@@ -1,0 +1,80 @@
+<include file="Public/base" />
+<link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<style>
+textarea{resize:vertical}
+</style>
+<script src="__JS__/plugins/iCheck/icheck.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/demo/form-validate-demo.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-sm-12">
+				<ol class="breadcrumb m-t">
+					<li>
+						<a href="{:U('admin/index/main')}" class="btn btn-outline btn-link">管理中心</a>
+					</li>
+					<if condition="Is_Auth('Admin/Config/index')">
+					<li>
+						<a href="{:U('admin/config/index')}" class="btn btn-outline btn-link">配置列表</a>
+					</li>
+					</if>
+					<li>
+						<strong>配置详情</strong>
+					</li>
+				</ol>
+			</div>
+		</div>
+        <div class="row m-t">
+			<div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <eq name="info.status" value="1"><span class="badge badge-info">正常</span><else /><span class="badge badge-danger">禁用</span></eq>配置名称：{$info.name}
+                            </li>
+                            <li class="list-group-item ">
+                                配置值：{$info.value}
+                            </li>
+                            <li class="list-group-item">
+                                配置类型：<volist name="type_list" id="type"><eq name="info.type" value="$type.type">{$type.title}</eq></volist>
+                            </li>
+                            <li class="list-group-item">
+                                配置说明：{$info.title}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                配置分组：<volist name="group_list" id="group"><eq name="group.type" value="$info.group">{$group.title}</eq></volist>
+                            </li>
+                            <li class="list-group-item ">
+                                配置参数：{$info.extra}
+                            </li>
+                            <li class="list-group-item">
+                                配置介绍：{$info.remark}
+                            </li>
+                            <li class="list-group-item">
+                                排序：{$info.sort}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="hr-line-dashed"></div>
+			<div class="col-sm-4 col-sm-offset-6">
+				<button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">返回</button>
+			</div>
+		</div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>
